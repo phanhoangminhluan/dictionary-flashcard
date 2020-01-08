@@ -153,8 +153,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # Mac
-.DS_Store
-dictionary-backend/mvnw
-dictionary-backend/mvnw.cmd
-dictionary-backend/.mvn/wrapper/maven-wrapper.properties
-dictionary-backend/HELP.md
+dictionary-backend/.DS_Store
