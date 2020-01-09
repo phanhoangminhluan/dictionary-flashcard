@@ -154,3 +154,7 @@ $RECYCLE.BIN/
 
 # Mac
 dictionary-backend/.DS_Store
+
+# Elastic-Kibana
+/elastic-kibana/*
+.DS_Store
