@@ -1,4 +1,6 @@
 # Dictionary x Flashcard
+In this project, we have 3 independent sub-projects. To enhance maintainability as well as readability, i have just applied git submodule for this project.
+For further information about git submodule, you can find your answer here: https://git-scm.com/book/en/v2/Git-Tools-Submodules
 ### How to clone this project ?
 1. Create a folder in your local.
 2. Open CMD (on Windows) or Terminal (on MacOS) on that folder.
