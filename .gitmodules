@@ -1,0 +1,6 @@
+[submodule "dictionary-backend"]
+	path = dictionary-backend
+	url = https://github.com/phanhoangminhluan/dictionary-backend
+[submodule "dictionary-mobile"]
+	path = dictionary-mobile
+	url = https://github.com/phanhoangminhluan/dictionary-mobile
