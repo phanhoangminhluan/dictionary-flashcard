@@ -4,3 +4,6 @@
 [submodule "dictionary-mobile"]
 	path = dictionary-mobile
 	url = https://github.com/phanhoangminhluan/dictionary-mobile
+[submodule "dictionary-frontend"]
+	path = dictionary-frontend
+	url = https://github.com/phanhoangminhluan/dictionary-frontend
