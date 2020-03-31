@@ -7,3 +7,6 @@
 [submodule "dictionary-frontend"]
 	path = dictionary-frontend
 	url = https://github.com/phanhoangminhluan/dictionary-frontend
+[submodule "dictionary-crawler"]
+	path = dictionary-crawler
+	url = https://github.com/phanhoangminhluan/dictionary-crawler
