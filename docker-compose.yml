@@ -48,7 +48,7 @@ services:
     volumes:
       - "./dictionary-backend/target:/home/usr/app/target"
       - "./dictionary-backend/src:/home/usr/app/src"
-      - "/Users/phanhoangminhluan/.m2:/root/.m2/repository"
+#      - "/Users/phanhoangminhluan/.m2:/root/.m2/repository"
   dictionary-crawler:
     build:
       context: ./dictionary-crawler
@@ -121,7 +121,6 @@ services:
       discovery.type: single-node
     networks:
       - dictionary-flashcard-network
-
   kibana:
     container_name: kibana
     build:
