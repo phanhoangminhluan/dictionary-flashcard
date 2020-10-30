@@ -3,8 +3,8 @@ services:
   redis:
     image: "redis:alpine"
     container_name: "dictionary-redis"
-    ports:
-      - "6379:6379"
+#    ports:
+#      - "6379:6379"
     depends_on:
       - mysql
     restart: always
@@ -14,8 +14,8 @@ services:
           - minhluan_redis
   mysql:
     image: mysql:8.0.20
-    volumes:
-      - dictionary-flashcard-data:/var/lib/mysql
+#    volumes:
+#      - dictionary-flashcard-data:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
     container_name: "dictionary-mysql"
     restart: always
@@ -24,8 +24,8 @@ services:
       MYSQL_USER: 'root'
       MYSQL_PASSWORD: '12345678'
       MYSQL_ROOT_PASSWORD: '12345678'
-    ports:
-      - '3333:3306'
+#    ports:
+#      - '3333:3306'
     expose:
       - '3306'
     networks:
@@ -33,63 +33,55 @@ services:
         aliases:
           - minhluan_mysql
   dictionary-backend:
+    image: dictionaryflashcard3.azurecr.io/phanhoangminhluan/dictionary-backend
     build:
       context: ./dictionary-backend
       dockerfile: ./Dockerfile
     container_name: "dictionary-backend"
-    ports:
-      - "8080:8080"
-      - "35729:35729"
+#    ports:
+#      - "8080:8080"
+#      - "35729:35729"
     depends_on:
       - redis
     restart: always
     networks:
       - dictionary-flashcard-network
-    volumes:
-      - "./dictionary-backend/target:/home/usr/app/target"
-      - "./dictionary-backend/src:/home/usr/app/src"
+#    volumes:
+#      - "./dictionary-backend/target:/home/usr/app/target"
+#      - "./dictionary-backend/src:/home/usr/app/src"
 #      - "/Users/phanhoangminhluan/.m2:/root/.m2/repository"
   dictionary-crawler:
+    image: dictionaryflashcard3.azurecr.io/phanhoangminhluan/dictionary-crawler
     build:
       context: ./dictionary-crawler
       dockerfile: ./Dockerfile
     container_name: "dictionary-crawler"
-    ports:
-      - "8088:8088"
+#    ports:
+#      - "8088:8088"
     expose:
       - '8088'
     depends_on:
       - selenium-hub
     restart: always
-    volumes:
+#    volumes:
 #      - "./dictionary-crawler/target:/home/usr/app/target"
-      - "/Users/phanhoangminhluan/.m2:/root/.m2/repository"
+#      - "/Users/phanhoangminhluan/.m2:/root/.m2/repository"
     networks:
       dictionary-flashcard-network:
         aliases:
           - dictionary-crawler
   selenium-hub:
-    image: selenium/hub:3.141.59-yttrium
+    image: selenium/hub:3.141.59
     container_name: selenium-hub
     restart: always
-    ports:
-      - "4444:4444"
-    expose:
-      - "4444"
+#    ports:
+#      - "4444:4444"
     networks:
       dictionary-flashcard-network:
-        aliases:
-            - selenium-hub
   chrome:
-    image: selenium/node-chrome-debug:3.141.59-yttrium
+    image: selenium/node-chrome:3.141.59
     restart: always
     container_name: chrome
-    deploy:
-      replicas: 2
-    ports:
-      - "5901:5900"
-    volumes:
-      - /dev/shm:/dev/shm
     depends_on:
       - selenium-hub
     environment:
@@ -97,50 +89,48 @@ services:
       - HUB_PORT=4444
 #      - JAVA_OPTS=-Dwebdriver.chrome.whitelistedIps=172.20.0.6
     networks:
-      - dictionary-flashcard-network
+      dictionary-flashcard-network:
   elasticsearch:
+    image: dictionaryflashcard3.azurecr.io/phanhoangminhluan/elastic
     container_name: elasticsearch
     build:
       context: ./elasticsearch/
-      args:
-        ELK_VERSION: 7.9.3
-    volumes:
-      - type: bind
-        source: ./elasticsearch/config/elasticsearch.yml
-        target: /usr/share/elasticsearch/config/elasticsearch.yml
-        read_only: true
-      - type: volume
-        source: elasticsearch
-        target: /usr/share/elasticsearch/data
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      ELASTIC_PASSWORD: changeme
-      discovery.type: single-node
+#    volumes:
+#      - type: bind
+#        source: ./elasticsearch/config/elasticsearch.yml
+#        target: /usr/share/elasticsearch/config/elasticsearch.yml
+#        read_only: true
+#      - type: volume
+#        source: elasticsearch
+#        target: /usr/share/elasticsearch/data
+#    ports:
+#      - "9200:9200"
+#      - "9300:9300"
+#    environment:
+#      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+#      ELASTIC_PASSWORD: changeme
+#      discovery.type: single-node
     networks:
       - dictionary-flashcard-network
   kibana:
+    image: dictionaryflashcard3.azurecr.io/phanhoangminhluan/kibana
     container_name: kibana
     build:
       context: ./kibana/
-      args:
-        ELK_VERSION: 7.9.3
-    volumes:
-      - type: bind
-        source: ./kibana/config/kibana.yml
-        target: /usr/share/kibana/config/kibana.yml
-        read_only: true
-    ports:
-      - "5601:5601"
+#    volumes:
+#      - type: bind
+#        source: ./kibana/config/kibana.yml
+#        target: /usr/share/kibana/config/kibana.yml
+#        read_only: true
+#    ports:
+#      - "5601:5601"
     networks:
       - dictionary-flashcard-network
     depends_on:
       - elasticsearch
-volumes:
-  dictionary-flashcard-data:
-  elasticsearch:
+#volumes:
+#  dictionary-flashcard-data:
+#  elasticsearch:
 networks:
   dictionary-flashcard-network:
     driver: bridge
