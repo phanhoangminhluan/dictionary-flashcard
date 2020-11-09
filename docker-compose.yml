@@ -33,7 +33,7 @@ services:
         aliases:
           - minhluan_mysql
   dictionary-backend:
-    image: dictionaryflashcard3.azurecr.io/phanhoangminhluan/dictionary-backend
+#    image: dictionaryflashcard3.azurecr.io/phanhoangminhluan/dictionary-backend
     build:
       context: ./dictionary-backend
       dockerfile: ./Dockerfile
